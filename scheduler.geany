@@ -1,0 +1,60 @@
+[editor]
+line_wrapping=true
+line_break_column=100
+auto_continue_multiline=true
+
+[file_prefs]
+final_new_line=false
+ensure_convert_new_lines=false
+strip_trailing_spaces=false
+replace_tabs=false
+
+[indentation]
+indent_width=4
+indent_type=1
+indent_hard_tab_width=8
+detect_indent=false
+detect_indent_width=false
+indent_mode=2
+
+[project]
+name=scheduler
+base_path=/home/joaovictorjs/Programming/cpp/scheduler
+description=
+file_patterns=
+
+[long line marker]
+long_line_behaviour=2
+long_line_column=90
+
+[files]
+current_page=2
+FILE_NAME_0=586;C++;0;EUTF-8;1;1;0;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Finclude%2Fscheduler.hpp;0;4
+FILE_NAME_1=452;C++;0;EUTF-8;1;1;0;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Fsrc%2Fscheduler.cpp;0;4
+FILE_NAME_2=817;C++;0;EUTF-8;1;1;1;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Ftest%2Fscheduler_test.cpp;0;4
+
+[VTE]
+last_dir=/home/joaovictorjs
+
+[prjorg]
+source_patterns=*.c;*.C;*.cpp;*.cxx;*.c++;*.cc;*.m;
+header_patterns=*.h;*.H;*.hpp;*.hxx;*.h++;*.hh;
+ignored_dirs_patterns=.*;CVS;
+ignored_file_patterns=*.o;*.obj;*.a;*.lib;*.so;*.dll;*.lo;*.la;*.class;*.jar;*.pyc;*.mo;*.gmo;
+generate_tag_prefs=0
+show_empty_dirs=true
+external_dirs=
+
+[build-menu]
+NF_00_LB=meson setup debug
+NF_00_CM=meson setup --prefix=/usr --buildtype=debug build
+NF_00_WD=%p
+NF_01_LB=meson compile
+NF_01_CM=meson compile -C build
+NF_01_WD=%p
+NF_02_LB=meson test
+NF_02_CM=meson test -C build
+NF_02_WD=%p
+NF_03_LB=delete build
+NF_03_CM=rm -rf build
+NF_03_WD=%p
