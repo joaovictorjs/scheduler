@@ -27,8 +27,8 @@ namespace Scheduler {
 		if(a_value_actual >= a_value_min && a_value_actual <= a_value_max) return;
 		std::string msg {
 			"ranger error, " + 
-			a_field_name + " must be <= " + 
-			std::to_string(a_value_min) + " and >= " + std::to_string(a_value_max) + 
+			a_field_name + " must be >= " + 
+			std::to_string(a_value_min) + " and <= " + std::to_string(a_value_max) + 
 			", but got " + std::to_string(a_value_actual)
 		};
 		throw Scheduler::RangeError(msg);
