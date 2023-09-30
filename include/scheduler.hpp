@@ -7,6 +7,8 @@
 #include <chrono>
 #include <string>
 #include <climits>
+#include <functional>
+#include <thread>
 
 namespace Scheduler {
 	class RangeError : public std::runtime_error{
@@ -48,12 +50,15 @@ namespace Scheduler {
 			long int get_schedules(
 				const std::time_t& a_datetime_start, 
 				const std::time_t& a_datetime_end
-			);
+			) const;
+			
+			std::time_t now() const;
 			
 		public:
 			Task& set_datetime_start(const std::string& a_datetime);
 			Task& set_datetime_end(const std::string& a_datetime);
 			Task& set_datetime_format(const std::string& a_format);
 			Task& set_interval(const int a_interval);
+			Task& run(const std::function<void(void)>& a_callback);
 	};
 }
