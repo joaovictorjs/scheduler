@@ -88,4 +88,19 @@ namespace Scheduler {
 		this->m_interval = a_interval;
 		return *this;
 	}
+	
+	long int Task::get_schedules(
+		const std::time_t& a_datetime_start, 
+		const std::time_t& a_datetime_end
+	){
+		if(a_datetime_start > a_datetime_end){
+			throw Scheduler::OrderError("order error, datetime start must not be after datetime end");
+		}
+		
+		long int remaining {a_datetime_end - a_datetime_start};
+		
+		if(this->m_interval >= remaining) return 1;
+		
+		return remaining / this->m_interval;
+	};
 }

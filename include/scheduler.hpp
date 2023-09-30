@@ -19,6 +19,11 @@ namespace Scheduler {
 			using std::runtime_error::runtime_error;
 	};
 	
+	class OrderError : public std::runtime_error{
+		public:
+			using std::runtime_error::runtime_error;
+	};
+	
 	class Task {
 		private:
 			std::tm m_datetime_start, m_datetime_end;
@@ -39,6 +44,11 @@ namespace Scheduler {
 			);
 			
 			void validate_datetime(const std::tm& a_datetime);
+			
+			long int get_schedules(
+				const std::time_t& a_datetime_start, 
+				const std::time_t& a_datetime_end
+			);
 			
 		public:
 			Task& set_datetime_start(const std::string& a_datetime);

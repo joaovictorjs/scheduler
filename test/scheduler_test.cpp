@@ -35,6 +35,13 @@ class TaskTestHelper : public Scheduler::Task {
 			Scheduler::Task::set_interval(a_interval);
 			return *this;
 		}
+		
+		long int get_schedules(
+			const std::time_t& a_datetime_start, 
+			const std::time_t& a_datetime_end
+		){
+			return Scheduler::Task::get_schedules(a_datetime_start, a_datetime_end);
+		}
 };
 
 TEST(TaskTestHelper, create_datetime){
@@ -118,6 +125,20 @@ TEST(TaskTestHelper, set_interval){
 	
 	ASSERT_THROW(task.set_interval(0), Scheduler::RangeError);
 	ASSERT_NO_THROW(task.set_interval(1));
+}
+
+TEST(TaskTestHelper, get_schedules){
+	TaskTestHelper task;
+	
+	task.set_interval(1);
+	
+	ASSERT_THROW(task.get_schedules(1, 0), Scheduler::OrderError);
+	
+	ASSERT_EQ(task.get_schedules(0, 0), 1);
+	ASSERT_EQ(task.get_schedules(0, 2), 2);
+	
+	task.set_interval(3);
+	ASSERT_EQ(task.get_schedules(0, 10), 3);
 }
 
 int main(int argc, char** argv) {
