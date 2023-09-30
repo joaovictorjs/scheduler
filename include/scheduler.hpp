@@ -6,6 +6,7 @@
 #include <sstream>
 #include <chrono>
 #include <string>
+#include <climits>
 
 namespace Scheduler {
 	class RangeError : public std::runtime_error{

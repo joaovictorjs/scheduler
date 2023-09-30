@@ -25,6 +25,16 @@ class TaskTestHelper : public Scheduler::Task {
 			Scheduler::Task::set_datetime_end(a_datetime);
 			return *this;
 		}
+		
+		TaskTestHelper& set_datetime_format(const std::string& a_format){
+			Scheduler::Task::set_datetime_format(a_format);
+			return *this;
+		}
+		
+		TaskTestHelper& set_interval(const int a_interval){
+			Scheduler::Task::set_interval(a_interval);
+			return *this;
+		}
 };
 
 TEST(TaskTestHelper, create_datetime){
@@ -90,8 +100,24 @@ TEST(TaskTestHelper, set_datetime_end){
 	ASSERT_NO_THROW(task.set_datetime_end("2023-01-02 03:04:05"));
 	// month with 32 days
 	ASSERT_THROW(task.set_datetime_end("2023-01-32 03:04:05"), Scheduler::FormatError);
-	// empty
+	// empty value
 	ASSERT_THROW(task.set_datetime_end(""), Scheduler::FormatError);
+}
+
+TEST(TaskTestHelper, set_datetime_format){
+	TaskTestHelper task;
+	
+	// emoty value
+	ASSERT_THROW(task.set_datetime_format(""), Scheduler::FormatError);
+	// BR format
+	ASSERT_NO_THROW(task.set_datetime_format("%d/%m/%Y %H:%M:%S"));
+}
+
+TEST(TaskTestHelper, set_interval){
+	TaskTestHelper task;
+	
+	ASSERT_THROW(task.set_interval(0), Scheduler::RangeError);
+	ASSERT_NO_THROW(task.set_interval(1));
 }
 
 int main(int argc, char** argv) {

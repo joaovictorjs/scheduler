@@ -26,7 +26,7 @@ namespace Scheduler {
 	){
 		if(a_value_actual >= a_value_min && a_value_actual <= a_value_max) return;
 		std::string msg {
-			"ranger error, " + 
+			"range error, " + 
 			a_field_name + " must be >= " + 
 			std::to_string(a_value_min) + " and <= " + std::to_string(a_value_max) + 
 			", but got " + std::to_string(a_value_actual)
@@ -56,16 +56,36 @@ namespace Scheduler {
 	}
 	
 	Task& Task::set_datetime_start(const std::string& a_datetime){
-		if(a_datetime.empty()) throw FormatError("format error, datetime start must no receive an empty value");
+		if(a_datetime.empty()) {
+			throw Scheduler::FormatError("format error, datetime start must no receive an empty value");
+		}
 		this->create_datetime(this->m_datetime_start, a_datetime);
 		this->validate_datetime(this->m_datetime_start);
 		return *this;
 	}
 	
 	Task& Task::set_datetime_end(const std::string& a_datetime){
-		if(a_datetime.empty()) throw FormatError("format error, datetime end must no receive an empty value");
+		if(a_datetime.empty()) {
+			throw Scheduler::FormatError("format error, datetime end must no receive an empty value");
+		}
 		this->create_datetime(this->m_datetime_end, a_datetime);
 		this->validate_datetime(this->m_datetime_end);
+		return *this;
+	}
+	
+	Task& Task::set_datetime_format(const std::string& a_format){
+		if(a_format.empty()) {
+			throw Scheduler::FormatError("format error, datetime format must no receive an empty value");
+		}
+		this->m_datetime_format = a_format;
+		return *this;
+	}
+	
+	Task& Task::set_interval(const int a_interval){
+		if(a_interval <= 0){
+			throw Scheduler::RangeError("range error, interval must be >= 0 and <= "+std::to_string(INT_MAX));
+		}
+		this->m_interval = a_interval;
 		return *this;
 	}
 }
