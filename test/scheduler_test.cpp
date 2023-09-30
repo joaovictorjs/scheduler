@@ -15,6 +15,16 @@ class TaskTestHelper : public Scheduler::Task {
 		void validate_datetime(const std::tm& a_datetime){
 			Scheduler::Task::validate_datetime(a_datetime);
 		}
+		
+		TaskTestHelper& set_datetime_start(const std::string& a_datetime){
+			Scheduler::Task::set_datetime_start(a_datetime);
+			return *this;
+		}
+		
+		TaskTestHelper& set_datetime_end(const std::string& a_datetime){
+			Scheduler::Task::set_datetime_end(a_datetime);
+			return *this;
+		}
 };
 
 TEST(TaskTestHelper, create_datetime){
@@ -62,6 +72,26 @@ TEST(TaskTestHelper, validate_datetime){
 	datetime.tm_year = 2023;
 	datetime.tm_mday = 28;
 	ASSERT_NO_THROW(task.validate_datetime(datetime));
+}
+
+TEST(TaskTestHelper, set_datetime_start){
+	TaskTestHelper task;
+	
+	ASSERT_NO_THROW(task.set_datetime_start("2023-01-02 03:04:05"));
+	// month with 32 days
+	ASSERT_THROW(task.set_datetime_start("2023-01-32 03:04:05"), Scheduler::FormatError);
+	// empty
+	ASSERT_THROW(task.set_datetime_start(""), Scheduler::FormatError);
+}
+
+TEST(TaskTestHelper, set_datetime_end){
+	TaskTestHelper task;
+	
+	ASSERT_NO_THROW(task.set_datetime_end("2023-01-02 03:04:05"));
+	// month with 32 days
+	ASSERT_THROW(task.set_datetime_end("2023-01-32 03:04:05"), Scheduler::FormatError);
+	// empty
+	ASSERT_THROW(task.set_datetime_end(""), Scheduler::FormatError);
 }
 
 int main(int argc, char** argv) {

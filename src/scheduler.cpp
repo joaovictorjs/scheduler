@@ -54,4 +54,18 @@ namespace Scheduler {
 		throw_if_invalid("minute", a_datetime.tm_min, 0, 59);
 		throw_if_invalid("second", a_datetime.tm_sec, 0, 59);
 	}
+	
+	Task& Task::set_datetime_start(const std::string& a_datetime){
+		if(a_datetime.empty()) throw FormatError("format error, datetime start must no receive an empty value");
+		this->create_datetime(this->m_datetime_start, a_datetime);
+		this->validate_datetime(this->m_datetime_start);
+		return *this;
+	}
+	
+	Task& Task::set_datetime_end(const std::string& a_datetime){
+		if(a_datetime.empty()) throw FormatError("format error, datetime end must no receive an empty value");
+		this->create_datetime(this->m_datetime_end, a_datetime);
+		this->validate_datetime(this->m_datetime_end);
+		return *this;
+	}
 }
