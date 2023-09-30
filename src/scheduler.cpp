@@ -92,7 +92,7 @@ namespace Scheduler {
 	long int Task::get_schedules(
 		const std::time_t& a_datetime_start, 
 		const std::time_t& a_datetime_end
-	){
+	) const {
 		if(a_datetime_start > a_datetime_end){
 			throw Scheduler::OrderError("order error, datetime start must not be after datetime end");
 		}
@@ -103,4 +103,36 @@ namespace Scheduler {
 		
 		return remaining / this->m_interval;
 	};
+	
+	std::time_t Task::now() const {
+		return std::time(nullptr);
+	};
+	
+	Task& Task::run(const std::function<void(void)>& a_callback) {
+		auto datetime_start {std::mktime(&this->m_datetime_start)};
+		auto datetime_end {std::mktime(&this->m_datetime_end)};
+		
+		long int limit {this->get_schedules(datetime_start, datetime_end)};
+		long int init {0};
+		
+		if(datetime_start < this->now()){
+			long int remaining {this->now() - datetime_start};
+			init = remaining / this->m_interval;
+		}
+		
+		for(long int it {init}; it < limit; it++){
+			std::time_t now {this->now()};
+			std::time_t schedule {datetime_start + (this->m_interval * it)};
+			
+			if(schedule < now) continue;
+			
+			if(schedule > now){
+				std::this_thread::sleep_for(std::chrono::seconds(schedule - now));
+			};
+			
+			a_callback();
+		}
+		
+		return *this;
+	}
 }
