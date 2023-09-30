@@ -36,12 +36,18 @@ class TaskTestHelper : public Scheduler::Task {
 			return *this;
 		}
 		
-		long int get_schedules(
+		long int get_schedules (
 			const std::time_t& a_datetime_start, 
 			const std::time_t& a_datetime_end
-		){
+		) const {
 			return Scheduler::Task::get_schedules(a_datetime_start, a_datetime_end);
 		}
+};
+
+class MockRun : public Scheduler::Task {
+	public:
+		MockRun() = default;
+		MOCK_METHOD(std::time_t, now, (), (const));
 };
 
 TEST(TaskTestHelper, create_datetime){
@@ -139,6 +145,35 @@ TEST(TaskTestHelper, get_schedules){
 	
 	task.set_interval(3);
 	ASSERT_EQ(task.get_schedules(0, 10), 3);
+}
+
+TEST(MockRun, run){
+	MockRun mock;
+	
+	// 2023-01-01 00:10:00
+	std::tm mock_now {
+		.tm_sec = 0,
+		.tm_min = 10,
+		.tm_hour = 0,
+		.tm_mday = 1,
+		.tm_mon = 0,
+		.tm_year = 123,
+		.tm_isdst = -1
+	};
+	
+	std::time_t now {std::mktime(&mock_now)};
+	
+	mock.set_datetime_start("2023-01-01 00:00:00").set_datetime_end("2023-01-01 01:00:00");
+	
+	int count {0};
+    ON_CALL(mock, now()).WillByDefault(testing::Invoke([&count, &now]()-> std::time_t{
+		return now + (++count);
+	}));
+	
+	mock.run([](){
+	});
+	
+	std::cout<<count<<std::endl;
 }
 
 int main(int argc, char** argv) {
