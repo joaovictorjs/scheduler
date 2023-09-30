@@ -30,6 +30,15 @@ namespace Scheduler {
 				const std::string& a_datetime
 			);
 			
+			void throw_if_invalid(
+				const std::string& a_field_name, 
+				int a_value_actual, 
+				int a_value_max,
+				int a_value_min
+			);
+			
+			void validate_datetime(const std::tm& a_datetime);
+			
 		public:
 			Task& set_datetime_start(const std::string& a_datetime);
 			Task& set_datetime_end(const std::string& a_datetime);

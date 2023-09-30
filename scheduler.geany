@@ -29,9 +29,10 @@ long_line_column=90
 
 [files]
 current_page=2
-FILE_NAME_0=586;C++;0;EUTF-8;1;1;0;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Finclude%2Fscheduler.hpp;0;4
-FILE_NAME_1=452;C++;0;EUTF-8;1;1;0;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Fsrc%2Fscheduler.cpp;0;4
-FILE_NAME_2=817;C++;0;EUTF-8;1;1;1;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Ftest%2Fscheduler_test.cpp;0;4
+FILE_NAME_0=787;C++;0;EUTF-8;1;1;0;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Finclude%2Fscheduler.hpp;0;4
+FILE_NAME_1=1137;C++;0;EUTF-8;1;1;0;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Fsrc%2Fscheduler.cpp;0;4
+FILE_NAME_2=1543;C++;0;EUTF-8;1;1;1;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Ftest%2Fscheduler_test.cpp;0;4
+FILE_NAME_3=0;None;0;EUTF-8;1;1;1;%2Fhome%2Fjoaovictorjs%2FProgramming%2Fcpp%2Fscheduler%2Fbuild%2Fmeson-logs%2Ftestlog.txt;0;4
 
 [VTE]
 last_dir=/home/joaovictorjs

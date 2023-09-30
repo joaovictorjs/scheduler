@@ -11,6 +11,10 @@ class TaskTestHelper : public Scheduler::Task {
 		){
 			Scheduler::Task::create_datetime(a_receiver, a_datetime);
 		}
+		
+		void validate_datetime(const std::tm& a_datetime){
+			Scheduler::Task::validate_datetime(a_datetime);
+		}
 };
 
 TEST(TaskTestHelper, create_datetime){
@@ -29,6 +33,35 @@ TEST(TaskTestHelper, create_datetime){
 	ASSERT_EQ(datetime.tm_min, 4);
 	ASSERT_EQ(datetime.tm_sec, 5);
 	ASSERT_EQ(datetime.tm_isdst, -1);
+}
+
+TEST(TaskTestHelper, validate_datetime){
+	TaskTestHelper task;
+	
+	std::tm datetime {
+		.tm_sec = 0,
+		.tm_min = 0,
+		.tm_hour = 0,
+		.tm_mday = 1,
+		.tm_mon = 0,
+		.tm_year = 123, // 2023
+	};
+	
+	ASSERT_NO_THROW(task.validate_datetime(datetime));
+	
+	// ferbuary with 29 days in non leap year
+	datetime.tm_mon = 1;
+	datetime.tm_mday = 29;
+	ASSERT_THROW(task.validate_datetime(datetime), Scheduler::RangeError);
+	
+	// ferbuary with 29 days in leap year
+	datetime.tm_year = 2024;
+	ASSERT_NO_THROW(task.validate_datetime(datetime));
+	
+	// ferbuary with 29 days in leap year
+	datetime.tm_year = 2023;
+	datetime.tm_mday = 28;
+	ASSERT_NO_THROW(task.validate_datetime(datetime));
 }
 
 int main(int argc, char** argv) {
