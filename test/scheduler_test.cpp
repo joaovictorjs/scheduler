@@ -58,7 +58,7 @@ TEST(TaskTestHelper, validate_datetime){
 	datetime.tm_year = 2024;
 	ASSERT_NO_THROW(task.validate_datetime(datetime));
 	
-	// ferbuary with 29 days in leap year
+	// ferbuary with 28 days
 	datetime.tm_year = 2023;
 	datetime.tm_mday = 28;
 	ASSERT_NO_THROW(task.validate_datetime(datetime));
