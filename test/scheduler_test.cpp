@@ -48,6 +48,18 @@ class MockRun : public Scheduler::Task {
 	public:
 		MockRun() = default;
 		MOCK_METHOD(std::time_t, now, (), (const override));
+		
+		std::tm get_default_tm(){
+			return { // 2023-01-01 00:10:00
+				.tm_sec = 0,
+				.tm_min = 10,
+				.tm_hour = 0,
+				.tm_mday = 1,
+				.tm_mon = 0,
+				.tm_year = 123,
+				.tm_isdst = -1
+			};
+		}
 };
 
 TEST(TaskTestHelper, create_datetime){
@@ -151,29 +163,22 @@ TEST(MockRun, run){
 	MockRun mock;
 	
 	// 2023-01-01 00:10:00
-	std::tm mock_now {
-		.tm_sec = 0,
-		.tm_min = 10,
-		.tm_hour = 0,
-		.tm_mday = 1,
-		.tm_mon = 0,
-		.tm_year = 123,
-		.tm_isdst = -1
-	};
+	std::tm mock_now = mock.get_default_tm();
 	
 	std::time_t now {std::mktime(&mock_now)};
 	
-	mock.set_datetime_start("2023-01-01 00:00:00").set_datetime_end("2023-01-01 01:00:00");
+	mock.set_datetime_start("2023-01-01 00:10:00").set_datetime_end("2023-01-01 01:00:00");
 	
-	int count {0};
-    ON_CALL(mock, now()).WillByDefault(testing::Invoke([&count, &now]()-> std::time_t{
-		return now + (++count);
+	int count {-1};
+    EXPECT_CALL(mock, now()).WillRepeatedly(testing::Invoke([&count, &now]() -> std::time_t{
+		return now + (count++);
 	}));
 	
-	mock.run([](){
-	});
+	int executions {0};
+	mock.run([&executions](){executions+=1;});
 	
-	std::cout<<count<<std::endl;
+	ASSERT_EQ(count, 3000);
+	ASSERT_EQ(executions, 3000);
 }
 
 int main(int argc, char** argv) {
