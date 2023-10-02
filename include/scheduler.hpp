@@ -32,7 +32,7 @@ namespace Scheduler {
 		private:
 			std::tm m_datetime_start, m_datetime_end;
 			std::string m_datetime_format {"%Y-%m-%d %H:%M:%S"};
-			int m_interval;
+			int m_interval {1};
 			
 		protected:
 			virtual void create_datetime(
