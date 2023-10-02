@@ -2,8 +2,8 @@
 An easy to use c++ library for scheduling tasks.
 
 ## Summary
-- [Installation] (#installation)
-- [Example] (#example)
+- [Installation](#Installation)
+- [Example](#Example)
 
 ## Installation
 
