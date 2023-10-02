@@ -35,32 +35,32 @@ namespace Scheduler {
 			int m_interval;
 			
 		protected:
-			void create_datetime(
+			virtual void create_datetime(
 				std::tm& a_receiver,
 				const std::string& a_datetime
 			);
 			
-			void throw_if_invalid(
+			virtual void throw_if_invalid(
 				const std::string& a_field_name, 
 				int a_value_actual, 
 				int a_value_max,
 				int a_value_min
 			);
 			
-			void validate_datetime(const std::tm& a_datetime);
+			virtual void validate_datetime(const std::tm& a_datetime);
 			
-			long int get_schedules(
+			virtual long int get_schedules(
 				const std::time_t& a_datetime_start, 
 				const std::time_t& a_datetime_end
 			) const;
 			
-			std::time_t now() const;
+			virtual std::time_t now() const;
 			
 		public:
-			Task& set_datetime_start(const std::string& a_datetime);
-			Task& set_datetime_end(const std::string& a_datetime);
-			Task& set_datetime_format(const std::string& a_format);
-			Task& set_interval(const int a_interval);
-			Task& run(const std::function<void(void)>& a_callback);
+			virtual Task& set_datetime_start(const std::string& a_datetime);
+			virtual Task& set_datetime_end(const std::string& a_datetime);
+			virtual Task& set_datetime_format(const std::string& a_format);
+			virtual Task& set_interval(const int a_interval);
+			virtual Task& run(const std::function<void(void)>& a_callback);
 	};
 }
