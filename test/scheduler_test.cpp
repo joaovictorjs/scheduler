@@ -12,26 +12,26 @@ class TaskTestHelper : public Scheduler::Task {
 			Scheduler::Task::create_datetime(a_receiver, a_datetime);
 		}
 		
-		void validate_datetime(const std::tm& a_datetime){
+		void validate_datetime(const std::tm& a_datetime) override {
 			Scheduler::Task::validate_datetime(a_datetime);
 		}
 		
-		TaskTestHelper& set_datetime_start(const std::string& a_datetime){
+		TaskTestHelper& set_datetime_start(const std::string& a_datetime) override {
 			Scheduler::Task::set_datetime_start(a_datetime);
 			return *this;
 		}
 		
-		TaskTestHelper& set_datetime_end(const std::string& a_datetime){
+		TaskTestHelper& set_datetime_end(const std::string& a_datetime) override {
 			Scheduler::Task::set_datetime_end(a_datetime);
 			return *this;
 		}
 		
-		TaskTestHelper& set_datetime_format(const std::string& a_format){
+		TaskTestHelper& set_datetime_format(const std::string& a_format) override {
 			Scheduler::Task::set_datetime_format(a_format);
 			return *this;
 		}
 		
-		TaskTestHelper& set_interval(const int a_interval){
+		TaskTestHelper& set_interval(const int a_interval) override {
 			Scheduler::Task::set_interval(a_interval);
 			return *this;
 		}
@@ -39,7 +39,7 @@ class TaskTestHelper : public Scheduler::Task {
 		long int get_schedules (
 			const std::time_t& a_datetime_start, 
 			const std::time_t& a_datetime_end
-		) const {
+		) const override {
 			return Scheduler::Task::get_schedules(a_datetime_start, a_datetime_end);
 		}
 };
@@ -47,7 +47,7 @@ class TaskTestHelper : public Scheduler::Task {
 class MockRun : public Scheduler::Task {
 	public:
 		MockRun() = default;
-		MOCK_METHOD(std::time_t, now, (), (const));
+		MOCK_METHOD(std::time_t, now, (), (const override));
 };
 
 TEST(TaskTestHelper, create_datetime){
