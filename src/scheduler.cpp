@@ -115,8 +115,10 @@ namespace Scheduler {
 		long int limit {this->get_schedules(datetime_start, datetime_end)};
 		long int init {0};
 		
-		if(datetime_start < this->now()){
-			long int remaining {this->now() - datetime_start};
+		std::time_t datetime_actual {this->now()};
+
+		if(datetime_start < datetime_actual){
+			long int remaining {datetime_actual - datetime_start};
 			init = remaining / this->m_interval;
 		}
 		
