@@ -61,10 +61,12 @@ void print_hello();
 int main() {
 	Scheduler::Task task;
 	
-	task.set_interval(5)
+ task.set_interval(5)
 		.set_datetime_start("2000-01-01 00:00:00")
 		.set_datetime_end("2100-01-01 00:00:00")
 		.run(print_hello);
+ 
+ return 0;
 }
 
 void print_hello() {
